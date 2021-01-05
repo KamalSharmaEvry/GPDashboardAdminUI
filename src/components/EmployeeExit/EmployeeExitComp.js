@@ -25,6 +25,10 @@ class EmployeeExitComp extends Component {
                 className: ""
             },
             {
+                columnName: "Requestor",
+                className: ""
+            },
+            {
                 columnName: "On Behalf of",
                 className: ""
             },
@@ -45,7 +49,7 @@ class EmployeeExitComp extends Component {
     componentWillMount() {
        
         this.GetDashboardHeaders();
-        this.SetCurrentUserInState();
+       // this.SetCurrentUserInState();
     }
 
     GetDashboardHeaders = () => {
@@ -60,18 +64,7 @@ class EmployeeExitComp extends Component {
         this.setState({ [keyValue]: columnValue });
     };
 
-    
-
-    //Get current user details: To-do : merge this in the request for requester and skip for Admin code.
-    SetCurrentUserInState = () => {
-        
-        return CallRESTAPI(this.state.currentUserEndPointURL)
-            .then(result => {
-                
-                this.setState({ currentUser: result.d.Id });
-                return result.d.Id;
-            });
-    };
+     
 
     //To set the data in state and one time initialization for Data table
     SetData(endPointUrl) {
@@ -100,8 +93,9 @@ class EmployeeExitComp extends Component {
       
       
         var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('Staff Clearance')/items?" +
-            "$select=Id,Created,RFResigneeName,RFTicketStatus,RFSupervisor1,RFCountryHead,RFHR1,RFChenStatus,RFGroupGemsStatus,RFGroupInfraStatus,RFGroupInsightStatus,RFGroupOptimumStatus,RFGroupQwikiStatus,RFGroupSalesForceStatus,RFGroupSAPStatus" +
-            "&$orderby=Created desc&$top=10 &$filter=AuthorId eq '"+this.state.currentUser+"'"
+            "$select=Id,Created,Title,RFResigneeName,RFTicketStatus,RFSupervisor1,RFCountryHead,RFHR1,RFChenStatus,RFGroupGemsStatus,RFGroupInfraStatus,RFGroupInsightStatus,RFGroupOptimumStatus,RFGroupQwikiStatus,RFGroupSalesForceStatus,RFGroupSAPStatus" +
+            "&$orderby=Created desc&$top=10"
+            // &$filter=AuthorId eq '"+this.state.currentUser+"'"
           
             this.SetData(endPointUrl);
     }
@@ -222,6 +216,7 @@ class EmployeeExitComp extends Component {
                                             {this.state.data.map((rowData, key) => (
                                                 <tr key={key}>
                                                     <td> {rowData.Created.slice(0, 10)} </td>
+                                                    <td> {rowData.Title}</td>
                                                     <td> {rowData.RFResigneeName}</td>
                                                     <td> <i className={this.IndicateStatusForCountryHead( rowData.RFTicketStatus)} data-toggle="tooltip" data-placement="top" title={rowData.RFCountryHead}></i><span className="hide">{rowData.RFSupervisor1}</span></td>
                                                     <td> <i className={this.IndicateStatusForHR( rowData.RFTicketStatus)} data-toggle="tooltip" data-placement="top" title={rowData.RFHR1}></i><span className="hide">{rowData.RFCountryHead}</span></td>

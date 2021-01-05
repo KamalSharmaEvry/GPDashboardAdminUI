@@ -29,9 +29,10 @@ class SystemAccessComp extends Component {
                 className: ""
             },
             {
-              columnName: "Id",
+              columnName: "Requestor",
               className: ""
           },
+            
             {
                 columnName: "On Behalf Of",
                 className: ""
@@ -47,8 +48,7 @@ class SystemAccessComp extends Component {
        
         //Get Dashboard Headers
         this.GetDashboardHeaders();
-        //Get Current User Info
-        this.SetCurrentUserInState();
+       
     }
 
     //To set the header
@@ -66,19 +66,7 @@ class SystemAccessComp extends Component {
         this.state.headerList.push({ columnName: "Sub Processes", className: "nosort" });
     };
 
-    //Get current user details: To-do : merge this in the request for requester and skip for Admin code.
-    SetCurrentUserInState = () => {
-        
-        return CallRESTAPI(this.state.currentUserEndPointURL)
-            .then(result => {
-                
-                this.setState({ currentUser: result.d.Id });
-                return result.d.Id;
-            });
-    };
-
-
-    
+       
 
     //To set the data in state and one time initialization for Data table
     SetData(endPointUrl) {
@@ -106,8 +94,9 @@ class SystemAccessComp extends Component {
     CallAPIs = () => {
  
         var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('SystemAccess Request')/items?" +
-        "$select=Id,GroupId,Created,RFOnBehalfOf,RFTicketStatus,RFSupervisorName,RFCountryHead,RFFilezilla,RFmsvisio,RFMsProject,RFMicrosoftOffice,RFSharedFolder,RFOthers0,RFSalesForce,RFSAP,RFOptimum,RFInsightChoice,RFBPC,RFEDI,RFEDI,RFDiamond,RFSAPWeb,RFSAPAdhoc" +
-        "&$orderby=Created desc&$top=10&$filter=AuthorId eq '"+this.state.currentUser+"'"
+        "$select=Id,GroupId,Created,Title,RFOnBehalfOf,RFTicketStatus,RFSupervisorName,RFCountryHead,RFFilezilla,RFmsvisio,RFMsProject,RFMicrosoftOffice,RFSharedFolder,RFOthers0,RFSalesForce,RFSAP,RFOptimum,RFInsightChoice,RFBPC,RFEDI,RFEDI,RFDiamond,RFSAPWeb,RFSAPAdhoc" +
+        "&$orderby=Created desc&$top=10"
+        //&$filter=AuthorId eq '"+this.state.currentUser+"'"
 
 
         //var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('"+ window.$ListNames.EmployeeOnboard + "')/items?" +
@@ -243,7 +232,7 @@ class SystemAccessComp extends Component {
                                             
                                                 <tr key={key}>
                                                     <td> {rowData.Created.slice(0, 10)} </td>
-                                                    <td> {rowData.Id}</td>
+                                                    <td> {rowData.Title}</td>
                                                     <td> {rowData.RFOnBehalfOf}</td>
                                                     <td> <i className={this.IndicateStatusForSupervisor( rowData.RFTicketStatus)} data-toggle="tooltip" data-placement="top" title={rowData.RFSupervisorName}></i><span className="hide">{rowData.RFSupervisorName}</span></td>
                                                     <td> <i className={this.IndicateStatusForCountryHead( rowData.RFTicketStatus)} data-toggle="tooltip" data-placement="top" title={rowData.RFCountryHead}></i><span className="hide">{rowData.RFCountryHead}</span></td>

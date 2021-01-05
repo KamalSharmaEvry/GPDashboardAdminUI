@@ -27,6 +27,10 @@ class EmployeeOnboardComp extends Component {
                 className: ""
             },
             {
+                columnName: "Requestor",
+                className: ""
+            },
+            {
                 columnName: "New Employee",
                 className: ""
             },
@@ -40,8 +44,7 @@ class EmployeeOnboardComp extends Component {
        
         //Get Dashboard Headers
         this.GetDashboardHeaders();
-        //Get Current User Info
-        this.SetCurrentUserInState();
+        
     }
 
     //To set the header
@@ -59,16 +62,7 @@ class EmployeeOnboardComp extends Component {
         this.state.headerList.push({ columnName: "Sub Processes", className: "nosort" });
     };
 
-    //Get current user details: To-do : merge this in the request for requester and skip for Admin code.
-    SetCurrentUserInState = () => {
-        
-        return CallRESTAPI(this.state.currentUserEndPointURL)
-            .then(result => {
-                
-                this.setState({ currentUser: result.d.Id });
-                return result.d.Id;
-            });
-    };
+    
 
     //To set the data in state and one time initialization for Data table
     SetData(endPointUrl) {
@@ -98,7 +92,8 @@ class EmployeeOnboardComp extends Component {
       
         var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('"+ window.$ListNames.EmployeeOnboard + "')/items?" +
             "$select=Id,Created,Title,RFApprovalStatus,RFSupervisorName0,RFHR1,RFCountryHead,RFRequestorName,RFSAPStatus,RFGemsStatus,RFVirtualHR,RFMicrosoftOffice,SAP,RFSharedFolder,RF_Qwiki" +
-            "&$orderby=Created desc&$top=10 &$filter=AuthorId eq '"+this.state.currentUser+"'"
+            "&$orderby=Created desc&$top=10"
+            // &$filter=AuthorId eq '"+this.state.currentUser+"'"
           
          
      this.SetData(endPointUrl);
@@ -149,6 +144,7 @@ class EmployeeOnboardComp extends Component {
                                             {this.state.data.map((rowData, key) => (
                                                 <tr key={key}>
                                                     <td> {rowData.Created.slice(0, 10)} </td>
+                                                    <td> {rowData.RFRequestorName}</td>
                                                     <td> {rowData.Title}</td>
                                                     <td><Supervisor status={rowData.RFApprovalStatus} supervisorname={rowData.RFSupervisorName0} /></td>
                                                     <td><CountryHead status={rowData.RFApprovalStatus} countryheadname={rowData.RFCountryHead} /></td>

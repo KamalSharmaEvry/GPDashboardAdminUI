@@ -22,6 +22,10 @@ class HardwareSoftwareComp extends Component {
                 className: ""
             },
             {
+              columnName: "Requestor",
+              className: ""
+          },
+            {
                 columnName: "On Behalf of",
                 className: ""
             },
@@ -62,10 +66,7 @@ class HardwareSoftwareComp extends Component {
     //when the componen will load
     componentWillMount() {
        
-        //Get Dashboard Headers
-        //this.GetDashboardHeaders();
-        //Get Current User Info
-        this.SetCurrentUserInState();
+        
     }
 
     //To set the header
@@ -76,16 +77,7 @@ class HardwareSoftwareComp extends Component {
 
    
 
-    //Get current user details: To-do : merge this in the request for requester and skip for Admin code.
-    SetCurrentUserInState = () => {
-        
-        return CallRESTAPI(this.state.currentUserEndPointURL)
-            .then(result => {
-                
-                this.setState({ currentUser: result.d.Id });
-                return result.d.Id;
-            });
-    };
+   
 
     
     //To set the data in state and one time initialization for Data table
@@ -116,7 +108,8 @@ class HardwareSoftwareComp extends Component {
       
         var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('Hardware Software Requisition Form')/items?" +
         "$select=Created,RFOnBehalfOf,Title,RFCost,Attachment,RFTicketStatus,RFAsset,RFCIO,RFSupervisorName,RFCountryHead" +
-        "&$top=10&$orderby=Created desc &$filter=AuthorId eq '"+this.state.currentUser+"'"
+        "&$top=10&$orderby=Created desc"
+        // &$filter=AuthorId eq '"+this.state.currentUser+"'"
           
          
      // var endPointUrl="REACT_APP_API_URL/Lists/getbytitle('New User Request')/items?$top=10&$orderby=Created desc&$filter=AuthorId eq '"+this.state.currentUser+"'"
@@ -356,6 +349,7 @@ class HardwareSoftwareComp extends Component {
                                             {this.state.data.map((rowData, key) => (
                                                 <tr key={key}>
                                                     <td> {rowData.Created.slice(0, 10)} </td>
+                                                    <td> {rowData.Title}</td>
                                                     <td> {rowData.RFOnBehalfOf}</td>
                                                     <td><i className={this.ValueExists(rowData.RFCost, rowData.RFTicketStatus)}></i><span className="hide">{rowData.RFCost}</span></td>
                           <td> <i className={this.AttachmentExists(rowData.Attachment, rowData.RFTicketStatus)}></i> <span className="hide">{rowData.Attachment}</span></td>

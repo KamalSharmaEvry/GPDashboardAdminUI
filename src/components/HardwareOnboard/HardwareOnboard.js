@@ -20,6 +20,10 @@ class HardwareOnboard extends Component {
         className: ""
       },
       {
+        columnName: "Requestor",
+        className: ""
+      },
+      {
         columnName: "New Employee",
         className: ""
       },
@@ -57,27 +61,17 @@ class HardwareOnboard extends Component {
   }
   async componentWillMount() {
     this.CollapseTableData = this.CollapseTableData.bind(this);
-    this.SetCurrentUserInState();
+   
   }
 
- //Get current user details: To-do : merge this in the request for requester and skip for Admin code.
- SetCurrentUserInState = () => {
-        
-  return CallRESTAPI(this.state.currentUserEndPointURL)
-      .then(result => {
-          
-          this.setState({ currentUser: result.d.Id });
-         
-          return result.d.Id;
-      });
-};
 
   
   SetHardwareOnboardData() {
   
     var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('NewUser-HWList')/items?" +
       "$select=Created,RFOnBehalfOf,Title,RFCost,Attachment,RFTicketStatus,RFAsset,RFCIO,RFSupervisorName,RFCountryHead" +
-      "&$top=10&$orderby=Created desc &$filter=AuthorId eq '"+this.state.currentUser+"'"
+      "&$top=10&$orderby=Created desc"
+      // &$filter=AuthorId eq '"+this.state.currentUser+"'"
     //endPointUrl=REACT_APP_API_URL+"/Lists/getbytitle('New User Request')/items?$top=10&$orderby=Created desc&$filter=AuthorId eq '"+currentUser+"'"
 
     //Get Data and Set in the 
@@ -408,6 +402,7 @@ class HardwareOnboard extends Component {
                       {this.state.data.map((rowData, key) => (
                         <tr key={key}>
                           <td> {rowData.Created.slice(0, 10)} </td>
+                          <td> {rowData.Title}</td>
                           <td> {rowData.RFOnBehalfOf}</td>
                           <td><i className={this.ValueExists(rowData.RFCost, rowData.RFTicketStatus)}></i><span className="hide">{rowData.RFCost}</span></td>
                           <td> <i className={this.AttachmentExists(rowData.Attachment, rowData.RFTicketStatus)}></i> <span className="hide">{rowData.Attachment}</span></td>

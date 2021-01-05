@@ -22,6 +22,10 @@ class GINAComp extends Component {
                 className: ""
             },
             {
+                columnName: "Requestor",
+                className: ""
+            },
+            {
                 columnName: "On Behalf of",
                 className: ""
             },
@@ -41,7 +45,7 @@ class GINAComp extends Component {
     //when the componen will load
     componentWillMount() {
        
-     this.SetCurrentUserInState();
+     
     }
 
     //To set the header
@@ -59,16 +63,7 @@ class GINAComp extends Component {
         this.state.headerList.push({ columnName: "Sub Processes", className: "nosort" });
     };
 
-    //Get current user details: To-do : merge this in the request for requester and skip for Admin code.
-    SetCurrentUserInState = () => {
-        
-        return CallRESTAPI(this.state.currentUserEndPointURL)
-            .then(result => {
-                
-                this.setState({ currentUser: result.d.Id });
-                return result.d.Id;
-            });
-    };
+   
 
     IndicateStatusForPBAdmin= function (status) {
         var statusColor = '';
@@ -145,7 +140,8 @@ class GINAComp extends Component {
       
         var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('Power BI')/items?" +
             "$select=Id,Created,Title,RFApprovalStatus,RFOnBehalfOfText" +
-            "&$orderby=Created desc&$top=10 &$filter=AuthorId eq '"+this.state.currentUser+"'"
+            "&$orderby=Created desc&$top=10"
+            // &$filter=AuthorId eq '"+this.state.currentUser+"'"
         
          
      
@@ -196,6 +192,7 @@ class GINAComp extends Component {
                                             {this.state.data.map((rowData, key) => (
                                                 <tr key={key}>
                                                     <td> {rowData.Created.slice(0, 10)} </td>
+                                                    <td> {rowData.Title}</td>
                                                     <td> {rowData.RFOnBehalfOfText}</td>
                                                     <td> <i className={this.IndicateStatusForPBAdmin( rowData.RFApprovalStatus)}> </i> </td>
                                                     <td> <i className={this.IndicateStatusForClosedRequest( rowData.RFApprovalStatus)}> </i> </td>
