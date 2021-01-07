@@ -15,7 +15,7 @@ class RequestorDashboardComp extends Component {
           flagFirstHardwareAdLoad: false,
             currentUserEndPointURL: REACT_APP_API_URL + "/currentUser",
             dasboardEndPointURL: REACT_APP_API_URL + "/Lists/getbytitle('DashboardFlowList')/items?$select=OData__x004c_1,OData__x004c_2,OData__x004c_3,OData__x004c_4&$filter=Title eq 'NewUser'",
-            tableTitle: "Requestor Dashboard",
+            tableTitle: "Admin Dashboard",
             data: [],
             
             subProcessList: []
