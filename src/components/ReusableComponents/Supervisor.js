@@ -5,18 +5,16 @@ class Supervisor extends Component {
 
         const currentStatus = this.props.status;
         const currentSupervisor = this.props.supervisorname;
-        
+        debugger;
         let icon;
         switch (currentStatus) {
-            case window.$Status.L1Rejected:
+            case "L3 Rejected":
                 icon = <div><i className="fa fa-close red" data-toggle="tooltip" data-placement="top" title={currentSupervisor}></i><span className="hide">{currentStatus}</span></div>;
                 break;
-            case window.$Status.InProgress:
+            case "In Progress":
                 icon = <div><i className="fa fa-clock-o orange" data-toggle="tooltip" data-placement="top" title={currentSupervisor}></i><span className="hide">{currentStatus}</span></div>;
                 break;
-            case window.$Status.L1InProgress:
-                icon = <div><i className="fa fa-clock-o orange" data-toggle="tooltip" data-placement="top" title={currentSupervisor}></i><span className="hide">{currentStatus}</span></div>;
-                break;
+            
                 
             //UserCreationConfirmed, UserCreation In Progress, L1/L2/L3/L4 Approved, L2/L3/L4 In Progress,L2,L3,L4 Rejected
             default:
