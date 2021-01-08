@@ -74,7 +74,7 @@ class SystemAccessComp extends Component {
         CallRESTAPI(endPointUrl).then(response => {
             this.setState({ data: response.d.results })
             if (!this.state.flagFirstSystemAccessLoad) {
-                $('#systemAccessTable').DataTable({
+                $('#systemAccessAdminTable').DataTable({
                     paging: false,
                     info: false,
                     aaSorting: [[0, 'desc']],
@@ -221,7 +221,7 @@ class SystemAccessComp extends Component {
                             </button>
                             <div className="card-body hide">
                                 <div className="table-responsive">
-                                    <table className="table" id="empOnboardTable">
+                                    <table className="table" id="systemAccessAdminTable">
                                         <thead className=" text-primary-blue">
                                             <tr>{this.state.headerList.map((headerColumn, key) =>
                                                 <th key={key} className={headerColumn.className}>{headerColumn.columnName}</th>)}
