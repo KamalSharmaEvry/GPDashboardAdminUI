@@ -21,7 +21,7 @@ class EmployeeExitComp extends Component {
             tableTitle: "Employee Exit",
             data: [],
             headerList: [{
-                columnName: "Created Date",
+                columnName: "Created",
                 className: ""
             },
             {
@@ -54,7 +54,7 @@ class EmployeeExitComp extends Component {
 
     GetDashboardHeaders = () => {
               
-        this.state.headerList.push({ columnName: "Sub Processes", className: "nosort" });
+        this.state.headerList.push({ columnName: "Sub Process", className: "nosort" });
         this.state.headerList.push({ columnName: "Deactivate User", className: "nosort" });
     };
 

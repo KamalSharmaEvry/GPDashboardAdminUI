@@ -25,7 +25,7 @@ class SystemAccessComp extends Component {
             tableTitle: "Enterprise Application",
             data: [],
             headerList: [{
-                columnName: "Created Date",
+                columnName: "Created",
                 className: ""
             },
             {
@@ -34,7 +34,7 @@ class SystemAccessComp extends Component {
           },
             
             {
-                columnName: "On Behalf Of",
+                columnName: "On Behalf of",
                 className: ""
             },
             
@@ -63,7 +63,7 @@ class SystemAccessComp extends Component {
         this.SetLevelState("L1", "Country Head")
       //  this.SetLevelState("L3", "HR")
         //this.SetLevelState("L4", "Infra")
-        this.state.headerList.push({ columnName: "Sub Processes", className: "nosort" });
+        this.state.headerList.push({ columnName: "Sub Process", className: "nosort" });
     };
 
        
