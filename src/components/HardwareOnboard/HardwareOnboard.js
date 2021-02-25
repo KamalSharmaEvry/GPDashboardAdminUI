@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { CallRESTAPI } from '../Helpers/Helper';
 
+import moment from "moment-timezone";
+
 const { REACT_APP_API_URL } = process.env;
 
 const $ = require('jquery');
@@ -70,7 +72,7 @@ class HardwareOnboard extends Component {
   
     var endPointUrl = REACT_APP_API_URL + "/Lists/getbytitle('NewUser-HWList')/items?" +
       "$select=Created,RFOnBehalfOf,Title,RFCost,Attachment,RFTicketStatus,RFAsset,RFCIO,RFSupervisorName,RFCountryHead" +
-      "&$top=10&$orderby=Created desc"
+      "&$orderby=Created desc&$top=10"
       // &$filter=AuthorId eq '"+this.state.currentUser+"'"
     //endPointUrl=REACT_APP_API_URL+"/Lists/getbytitle('New User Request')/items?$top=10&$orderby=Created desc&$filter=AuthorId eq '"+currentUser+"'"
 
@@ -401,7 +403,7 @@ class HardwareOnboard extends Component {
                     <tbody>
                       {this.state.data.map((rowData, key) => (
                         <tr key={key}>
-                          <td> {rowData.Created.slice(0, 10)} </td>
+                          <td>{ moment(rowData.Created).tz('Asia/Singapore').format("YYYY-MM-DD")} </td>
                           <td> {rowData.Title}</td>
                           <td> {rowData.RFOnBehalfOf}</td>
                           <td><i className={this.ValueExists(rowData.RFCost, rowData.RFTicketStatus)}></i><span className="hide">{rowData.RFCost}</span></td>

@@ -6,6 +6,7 @@ import Infra from '../ReusableComponents/Infra';
 import EmployeeOnboardSubProcess from '../ReusableComponents/EmployeeOnboardSubProcess';
 import { CallRESTAPI } from '../Helpers/Helper';
 import SystemAccessSubProcess from '../ReusableComponents/SystemAccessSubProcess';
+import moment from "moment-timezone";
 
 
 const { REACT_APP_API_URL } = process.env;
@@ -231,7 +232,7 @@ class SystemAccessComp extends Component {
                                             {this.state.data.map((rowData, key) => (
                                             
                                                 <tr key={key}>
-                                                    <td> {rowData.Created.slice(0, 10)} </td>
+                                                   <td>{ moment(rowData.Created).tz('Asia/Singapore').format("YYYY-MM-DD")} </td>
                                                     <td> {rowData.Title}</td>
                                                     <td> {rowData.RFOnBehalfOf}</td>
                                                     <td> <i className={this.IndicateStatusForSupervisor( rowData.RFTicketStatus)} data-toggle="tooltip" data-placement="top" title={rowData.RFSupervisorName}></i><span className="hide">{rowData.RFSupervisorName}</span></td>

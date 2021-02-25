@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import EmployeeExitSubProcess  from '../ReusableComponents/EmployeeExitSubProcess';
 import { CallRESTAPI } from '../Helpers/Helper';
 import DeactivateUser from '../ReusableComponents/DeactivateUser';
+import moment from "moment-timezone";
+
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -215,7 +217,7 @@ class EmployeeExitComp extends Component {
                                             
                                             {this.state.data.map((rowData, key) => (
                                                 <tr key={key}>
-                                                    <td> {rowData.Created.slice(0, 10)} </td>
+                                                    <td>{ moment(rowData.Created).tz('Asia/Singapore').format("YYYY-MM-DD")} </td>
                                                     <td> {rowData.Title}</td>
                                                     <td> {rowData.RFResigneeName}</td>
                                                     <td> <i className={this.IndicateStatusForCountryHead( rowData.RFTicketStatus)} data-toggle="tooltip" data-placement="top" title={rowData.RFCountryHead}></i><span className="hide">{rowData.RFSupervisor1}</span></td>

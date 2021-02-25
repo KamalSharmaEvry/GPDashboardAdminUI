@@ -5,6 +5,9 @@ import HR from '../ReusableComponents/HR';
 import Infra from '../ReusableComponents/Infra';
 import EmployeeOnboardSubProcess from '../ReusableComponents/EmployeeOnboardSubProcess';
 import { CallRESTAPI } from '../Helpers/Helper';
+import moment from "moment-timezone";
+
+
 
 const { REACT_APP_API_URL } = process.env;
 //Jquery 3.4 is used only for Data table plugin that is being used in each component.
@@ -121,7 +124,7 @@ class EmployeeOnboardComp extends Component {
     
     render() {
         var subprocess;
-        
+       
         return (
             <div className="child child-width">
                 <div className="row">
@@ -143,7 +146,9 @@ class EmployeeOnboardComp extends Component {
                                             
                                             {this.state.data.map((rowData, key) => (
                                                 <tr key={key}>
-                                                    <td> {rowData.Created.slice(0, 10)} </td>
+                                                      
+                                            <td>{ moment(rowData.Created).tz('Asia/Singapore').format("YYYY-MM-DD")} </td>
+                                                   
                                                     <td> {rowData.RFRequestorName}</td>
                                                     <td> {rowData.Title}</td>
                                                     <td><Supervisor status={rowData.RFApprovalStatus} supervisorname={rowData.RFSupervisorName0} /></td>
